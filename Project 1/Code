@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Interactive Personal Diary (Blank - User Ready)</title>
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script&family=Merriweather&display=swap" rel="stylesheet" />
+
+<style>
+:root {
+    --cream: #fef9f3;
+    --paper-yellow: #fff8dc;
+    --soft-brown: #a47e52;
+    --pastel-brown: #d4b483;
+    --shadow-color: rgba(101, 67, 33, 0.18);
+    --text-color: #563d1f;
+    --line-color: #e4d9c6;
+    --border-color: #cbbf9f;
+    --sticky-gradient: linear-gradient(160deg, #fff7d6 0%, #fbe7b5 100%);
+    --background-gradient: linear-gradient(90deg, #fef9f3 0%, #fff8dc 100%);
+    --button-color: #d4b483;
+    --button-hover: #a47e52;
+}
+
+body {
+    margin: 0;
+    font-family: 'Merriweather', serif;
+    background: var(--background-gradient);
+    color: var(--text-color);
+    line-height: 1.6;
+    min-height: 100vh;
+    background-image:
+        repeating-linear-gradient(
+            to bottom,
+            transparent,
+            transparent 28px,
+            var(--line-color) 29px,
+            var(--line-color) 30px
+        );
+    background-attachment: fixed;
+}
+
+header, footer, main {
+    max-width: 900px;
+    margin: 1rem auto;
+    padding: 1.5rem 2rem;
+    border-radius: 14px;
+    box-shadow: 0 6px 15px var(--shadow-color);
+    background: var(--cream);
+    border: 1px solid var(--border-color);
+}
+
+header {
+    text-align: center;
+}
+
+.diary-title {
+    font-family: 'Dancing Script', cursive;
+    font-size: 3rem;
+    color: var(--soft-brown);
+    margin: 0;
+    letter-spacing: 1.5px;
+    text-shadow: 1px 1px 1px #f7ecd3;
+}
+
+.quote {
+    font-style: italic;
+    color: var(--pastel-brown);
+    margin-top: 0.5rem;
+    font-size: 1.3rem;
+}
+
+/* Entries Layout */
+.entries {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.entry-card {
+    background: var(--paper-yellow);
+    border: 1.25px solid var(--border-color);
+    border-radius: 16px;
+    padding: 2rem;
+    position: relative;
+    box-shadow: 0 8px 20px var(--shadow-color);
+    font-family: 'Merriweather', serif;
+    color: var(--text-color);
+}
+
+.entry-card:hover {
+    box-shadow: 0 12px 30px rgba(101,67,33,0.22);
+}
+
+/* Date Tab */
+.date-tab {
+    position: absolute;
+    top: 1rem;
+    left: -1.8rem;
+    background: var(--sticky-gradient);
+    color: #7a5e28;
+    font-weight: 700;
+    font-family: 'Dancing Script', cursive;
+    padding: 0.5rem 1.1rem;
+    border-radius: 8px;
+    font-size: 1.3rem;
+    transform: rotate(-3deg);
+    border: 1px solid #e0d28c;
+    box-shadow: 2px 3px 6px rgba(0,0,0,0.15);
+    user-select: none;
+}
+
+/* Labels */
+.label {
+    font-weight: bold;
+    color: var(--soft-brown);
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.3rem;
+    margin-bottom: 0.3rem;
+    display: block;
+}
+
+/* Editable fields styling */
+[contenteditable] {
+    border: 1.5px dashed var(--pastel-brown);
+    border-radius: 8px;
+    padding: 8px 12px;
+    min-height: 1.5em;
+    box-shadow: inset 1px 1px 6px rgba(255, 255, 255, 0.7);
+    transition: background-color 0.3s ease;
+}
+[contenteditable]:empty:before {
+    content: attr(data-placeholder);
+    color: #a19884;
+    font-style: italic;
+}
+[contenteditable]:focus {
+    background-color: #fffde7;
+    box-shadow: 0 0 8px var(--soft-brown);
+}
+
+/* Title Inside Card */
+.entry-title {
+    font-family: 'Dancing Script', cursive;
+    color: var(--soft-brown);
+    font-size: 2rem;
+    margin-top: 0.3rem;
+    margin-bottom: 1rem;
+}
+
+/* Beautiful Button */
+.save-button {
+    display: inline-block;
+    background-color: var(--button-color);
+    color: #fff;
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.4rem;
+    font-weight: bold;
+    padding: 0.5rem 1.5rem;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    margin-top: 1rem;
+    transition: background-color 0.3s ease, transform 0.2s;
+}
+.save-button:hover {
+    background-color: var(--button-hover);
+    transform: scale(1.05);
+}
+.save-button:active {
+    transform: scale(0.98);
+}
+
+footer {
+    text-align: center;
+    font-size: 1rem;
+    color: var(--pastel-brown);
+}
+
+@media (max-width: 768px) {
+    .date-tab {
+        font-size: 1.05rem;
+        left: -1.4rem;
+        padding: 0.4rem 0.8rem;
+    }
+    .entry-title {
+        font-size: 1.6rem;
+    }
+}
+</style>
+</head>
+<body>
+
+<header>
+    <h1 class="diary-title">My Personal Diary</h1>
+    <p class="quote">"Each day is a new page of your story."</p>
+</header>
+
+<main>
+    <section class="entries">
+
+        <!-- Blank Entry Template -->
+        <article class="entry-card">
+            <div class="date-tab" contenteditable="true" data-placeholder="Date Tab (e.g., Aug 15⁵)"></div>
+
+            <span class="label">Date:</span>
+            <p contenteditable="true" data-placeholder="Type full date here..."></p>
+
+            <span class="label">Title:</span>
+            <h2 class="entry-title" contenteditable="true" data-placeholder="Type your title here..."></h2>
+
+            <span class="label">Entry:</span>
+            <p contenteditable="true" data-placeholder="Write your diary entry here..."></p>
+            <p contenteditable="true" data-placeholder="Continue writing..."></p>
+
+            <!-- Save Entry Button -->
+            <button class="save-button">💾 Save Entry</button>
+        </article>
+
+    </section>
+</main>
+
+<footer>
+    <p>© 2025 My Personal Diary</p>
+</footer>
+
+</body>
+</html>
